@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'rapid_rack/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'rapid_rack'
+  spec.name          = 'rapid-rack'
   spec.version       = RapidRack::VERSION
   spec.authors       = ['Shaun Mangelsdorf']
   spec.email         = ['s.mangelsdorf@gmail.com']
