@@ -4,7 +4,7 @@ module RapidRack
   RSpec.describe Authenticator, type: :feature do
     def build_app(prefix)
       opts = { url: url, receiver: receiver, secret: secret,
-               issuer: issuer, audience: audience }
+               issuer: issuer, audience: audience, error_handler: handler }
       Rack::Builder.new do
         map(prefix) { use Authenticator, opts }
         run Rack::Lobster.new
@@ -17,6 +17,7 @@ module RapidRack
     let(:url) { 'https://rapid.example.com/jwt/authnrequest/research/abcd1234' }
     let(:secret) { '1234abcd' }
     let(:app) { build_app(prefix) }
+    let(:handler) { nil }
     let(:receiver) do
       Class.new do
         def receive(_)
@@ -98,6 +99,23 @@ module RapidRack
 
       shared_examples 'an invalid claims set' do
         it { is_expected.to be_bad_request }
+
+        context 'with an error handler' do
+          let(:handler_class) do
+            Class.new do
+              def handle(_env, _exception)
+                [403, {}, 'Surprise!']
+              end
+            end
+          end
+
+          let(:handler) { handler_class.new }
+
+          it 'uses the error handler to respond' do
+            expect(subject).to be_forbidden
+            expect(subject.body).to have_content('Surprise!')
+          end
+        end
       end
 
       context 'with a nil audience' do

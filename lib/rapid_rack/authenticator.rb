@@ -10,6 +10,7 @@ module RapidRack
       @secret = opts[:secret]
       @issuer = opts[:issuer]
       @audience = opts[:audience]
+      @error_handler = opts[:error_handler] || self
     end
 
     def call(env)
@@ -17,6 +18,15 @@ module RapidRack
       return send(sym, env) if sym
 
       [404, {}, "Not found: #{env['PATH_INFO']}"]
+    end
+
+    def handle(_env, _exception)
+      [
+        400, { 'Content-Type' => 'text/plain' },
+        'Sorry, your attempt to log in to this service was not successful. ' \
+        'Please contact the service owner for assistance, and include the ' \
+        'link you used to access this service.'
+      ]
     end
 
     private
@@ -40,19 +50,19 @@ module RapidRack
       return method_not_allowed unless method?(env, 'POST')
       params = Rack::Utils.parse_query(env['rack.input'].read)
 
-      with_claims(params['assertion']) do |claims|
+      with_claims(env, params['assertion']) do |claims|
         @receiver.new.receive(claims)
       end
     end
 
-    def with_claims(assertion)
+    def with_claims(env, assertion)
       claims = JSON::JWT.decode(assertion, @secret)
       validate_claims(claims)
       yield claims
-    rescue JSON::JWT::Exception
-      bad_request
-    rescue InvalidClaim
-      bad_request
+    rescue JSON::JWT::Exception => e
+      @error_handler.handle(env, e)
+    rescue InvalidClaim => e
+      @error_handler.handle(env, e)
     end
 
     def validate_claims(claims)
@@ -94,10 +104,6 @@ module RapidRack
 
     def method_not_allowed
       [405, {}, 'Method not allowed']
-    end
-
-    def bad_request
-      [400, {}, '']
     end
   end
 end
