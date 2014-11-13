@@ -16,15 +16,16 @@ module RapidRack
       sym = DISPATCH[env['PATH_INFO']]
       return send(sym, env) if sym
 
-      [404, {}, "Not found: #{env['PATH_INFO']}"]
+      [404, {}, ["Not found: #{env['PATH_INFO']}"]]
     end
 
     def handle(_env, _exception)
       [
-        400, { 'Content-Type' => 'text/plain' },
-        'Sorry, your attempt to log in to this service was not successful. ' \
-        'Please contact the service owner for assistance, and include the ' \
-        'link you used to access this service.'
+        400, { 'Content-Type' => 'text/plain' }, [
+          'Sorry, your attempt to log in to this service was not successful. ',
+          'Please contact the service owner for assistance, and include the ',
+          'link you used to access this service.'
+        ]
       ]
     end
 
@@ -42,7 +43,7 @@ module RapidRack
     def initiate(env)
       return method_not_allowed unless method?(env, 'GET')
 
-      [302, { 'Location' => @url }, '']
+      [302, { 'Location' => @url }, []]
     end
 
     def callback(env)
@@ -102,7 +103,7 @@ module RapidRack
     end
 
     def method_not_allowed
-      [405, {}, 'Method not allowed']
+      [405, {}, ['Method not allowed']]
     end
   end
 end

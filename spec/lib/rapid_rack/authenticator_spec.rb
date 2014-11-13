@@ -6,6 +6,7 @@ module RapidRack
       opts = { url: url, receiver: receiver, secret: secret,
                issuer: issuer, audience: audience, error_handler: handler }
       Rack::Builder.new do
+        use Rack::Lint
         map(prefix) { run Authenticator.new(opts) }
         run Rack::Lobster.new
       end
@@ -21,7 +22,7 @@ module RapidRack
     let(:receiver) do
       Class.new do
         def receive(_)
-          [200, {}, 'Permitted']
+          [200, {}, ['Permitted']]
         end
 
         def register_jti(*)
@@ -104,7 +105,7 @@ module RapidRack
           let(:handler_class) do
             Class.new do
               def handle(_env, _exception)
-                [403, {}, 'Surprise!']
+                [403, {}, ['Surprise!']]
               end
             end
           end
