@@ -3,8 +3,7 @@ require 'rack/utils'
 
 module RapidRack
   class Authenticator
-    def initialize(app, opts)
-      @app = app
+    def initialize(opts)
       @url = opts[:url]
       @receiver = opts[:receiver]
       @secret = opts[:secret]

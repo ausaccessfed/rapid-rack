@@ -6,7 +6,7 @@ module RapidRack
       opts = { url: url, receiver: receiver, secret: secret,
                issuer: issuer, audience: audience, error_handler: handler }
       Rack::Builder.new do
-        map(prefix) { use Authenticator, opts }
+        map(prefix) { run Authenticator.new(opts) }
         run Rack::Lobster.new
       end
     end
