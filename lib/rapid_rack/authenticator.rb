@@ -52,14 +52,14 @@ module RapidRack
       params = Rack::Utils.parse_query(env['rack.input'].read)
 
       with_claims(env, params['assertion']) do |claims|
-        @receiver.new.receive(env, claims)
+        receiver.receive(env, claims)
       end
     end
 
     def terminate(env)
       return method_not_allowed unless method?(env, 'GET')
 
-      @receiver.new.logout(env)
+      receiver.logout(env)
     end
 
     def with_claims(env, assertion)
@@ -84,7 +84,7 @@ module RapidRack
     end
 
     def replayed?(jti)
-      !@receiver.new.register_jti(jti)
+      !receiver.register_jti(jti)
     end
 
     def skewed?(iat)
@@ -111,6 +111,10 @@ module RapidRack
 
     def method_not_allowed
       [405, {}, ['Method not allowed']]
+    end
+
+    def receiver
+      @receiver.new
     end
   end
 end
