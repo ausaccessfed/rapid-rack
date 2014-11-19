@@ -25,6 +25,10 @@ module RapidRack
           [200, {}, ['Permitted']]
         end
 
+        def logout(_)
+          [200, {}, ['Logged Out!']]
+        end
+
         def register_jti(*)
           true
         end
@@ -51,6 +55,19 @@ module RapidRack
 
     context 'post /login' do
       before { post '/auth/login' }
+      it { is_expected.to be_method_not_allowed }
+    end
+
+    context 'get /logout' do
+      before { get '/auth/logout' }
+      it 'responds using the receiver' do
+        expect(last_response).to be_successful
+        expect(last_response.body).to have_content('Logged Out!')
+      end
+    end
+
+    context 'post /logout' do
+      before { post '/auth/logout' }
       it { is_expected.to be_method_not_allowed }
     end
 
