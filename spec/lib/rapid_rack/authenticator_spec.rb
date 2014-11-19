@@ -21,7 +21,7 @@ module RapidRack
     let(:handler) { nil }
     let(:receiver) do
       Class.new do
-        def receive(_)
+        def receive(_, _)
           [200, {}, ['Permitted']]
         end
 

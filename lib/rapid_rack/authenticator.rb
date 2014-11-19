@@ -51,7 +51,7 @@ module RapidRack
       params = Rack::Utils.parse_query(env['rack.input'].read)
 
       with_claims(env, params['assertion']) do |claims|
-        @receiver.new.receive(claims)
+        @receiver.new.receive(env, claims)
       end
     end
 
