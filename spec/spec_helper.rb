@@ -1,9 +1,18 @@
 require 'simplecov'
-require 'rapid_rack'
 
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../dummy/config/environment.rb',  __FILE__)
+
+require 'rspec/rails'
 require 'capybara/rspec'
 
+require 'rapid_rack'
+
 RSpec.configure do |config|
+  config.before(:suite) do
+    load Rails.root.join('db/schema.rb')
+  end
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
