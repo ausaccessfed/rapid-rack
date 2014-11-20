@@ -26,6 +26,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'rails', '~> 4.1.7'
   spec.add_development_dependency 'sqlite3'
+  spec.add_development_dependency 'fakeredis'
+  spec.add_development_dependency 'redis'
 
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-rspec'
