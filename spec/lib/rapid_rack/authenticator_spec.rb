@@ -56,8 +56,6 @@ module RapidRack
         expect(last_response).to be_redirect
         expect(last_response['Location']).to eq(url)
       end
-
-      it 'clears an existing session'
     end
 
     context 'post /login' do
