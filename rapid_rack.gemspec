@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Shaun Mangelsdorf']
   spec.email         = ['s.mangelsdorf@gmail.com']
   spec.summary       = 'Rack middleware for AAF Rapid Connect authentication.'
-  spec.homepage      = 'https://github.com/ausaccessfed/rapid_rack'
-  spec.license       = 'MIT'
+  spec.homepage      = 'https://github.com/ausaccessfed/rapid-rack'
+  spec.license       = 'Apache-2.0'
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(/^bin\//) { |f| File.basename(f) }
