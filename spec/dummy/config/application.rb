@@ -18,7 +18,7 @@ module Dummy
     config.consider_all_requests_local = true
     config.action_dispatch.show_exceptions = false
 
-    config.rapid_rack.receiver = TestReceiver
-    config.rapid_rack.error_handler = TestErrorHandler.new
+    config.rapid_rack.receiver = 'TestReceiver'
+    config.rapid_rack.error_handler = 'TestErrorHandler'
   end
 end

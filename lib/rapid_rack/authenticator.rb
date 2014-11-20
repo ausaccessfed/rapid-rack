@@ -5,11 +5,12 @@ module RapidRack
   class Authenticator
     def initialize(opts)
       @url = opts[:url]
-      @receiver = opts[:receiver]
+      @receiver = opts[:receiver].try(:constantize)
+      fail('A receiver must be configured for rapid_rack') if @receiver.nil?
       @secret = opts[:secret]
       @issuer = opts[:issuer]
       @audience = opts[:audience]
-      @error_handler = opts[:error_handler] || self
+      @error_handler = opts[:error_handler].try(:constantize).try(:new) || self
     end
 
     def call(env)

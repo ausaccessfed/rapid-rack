@@ -12,6 +12,13 @@ module RapidRack
       end
     end
 
+    def build_class(&bl)
+      klass = Class.new(&bl)
+      name = "TestClass#{SecureRandom.hex}"
+      RapidRack.const_set(name, klass)
+      "RapidRack::#{name}"
+    end
+
     let(:prefix) { '/auth' }
     let(:issuer) { 'https://rapid.example.com' }
     let(:audience) { 'https://service.example.com' }
@@ -20,7 +27,7 @@ module RapidRack
     let(:app) { build_app(prefix) }
     let(:handler) { nil }
     let(:receiver) do
-      Class.new do
+      build_class do
         def receive(_, _)
           [200, {}, ['Permitted']]
         end
@@ -119,15 +126,13 @@ module RapidRack
         it { is_expected.to be_bad_request }
 
         context 'with an error handler' do
-          let(:handler_class) do
-            Class.new do
+          let(:handler) do
+            build_class do
               def handle(_env, _exception)
                 [403, {}, ['Surprise!']]
               end
             end
           end
-
-          let(:handler) { handler_class.new }
 
           it 'uses the error handler to respond' do
             expect(subject).to be_forbidden
@@ -173,7 +178,7 @@ module RapidRack
 
       context 'with a replayed jti' do
         let(:receiver) do
-          Class.new do
+          build_class do
             def register_jti(*)
               false
             end
