@@ -5,6 +5,7 @@ require File.expand_path('../dummy/config/environment.rb',  __FILE__)
 
 require 'rspec/rails'
 require 'capybara/rspec'
+require 'fakeredis'
 
 require 'rapid_rack'
 
@@ -13,6 +14,15 @@ Dir['./spec/support/*.rb'].each { |f| require f }
 RSpec.configure do |config|
   config.before(:suite) do
     load Rails.root.join('db/schema.rb')
+  end
+
+  config.before { Redis::Connection::Memory.reset_all_databases }
+
+  config.around do |example|
+    ActiveRecord::Base.transaction do
+      example.run
+      fail ActiveRecord::Rollback
+    end
   end
 
   config.expect_with :rspec do |expectations|

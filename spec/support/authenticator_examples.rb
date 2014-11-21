@@ -60,7 +60,6 @@ shared_examples 'an authenticator' do
       {
         cn: 'Test User', displayname: 'Test User X', surname: 'User',
         givenname: 'Test', mail: 'testuser@example.com', o: 'Test Org',
-        auedupersonsharedtoken: 'SharedTokenForTestUser_____',
         edupersonscopedaffiliation: 'member@example.com',
         edupersonprincipalname: 'testuser@example.com',
         edupersontargetedid: "#{issuer}!#{audience}!abcd"

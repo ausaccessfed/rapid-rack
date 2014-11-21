@@ -11,8 +11,6 @@ module RapidRack
       klass.send(:extend, overrides)
     end
 
-    before { Redis::Connection::Memory.reset_all_databases }
-
     context '#register_jti' do
       let(:value) { 'abcd' }
 
