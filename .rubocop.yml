@@ -1,2 +1,6 @@
 Documentation:
   Enabled: false
+
+Style/FileName:
+  Exclude:
+    - lib/rapid-rack.rb
