@@ -14,7 +14,7 @@ module RapidRack
       env['rack.session']['subject_id'] = id
     end
 
-    def finish(env)
+    def finish(_env)
       redirect_to('/')
     end
 
