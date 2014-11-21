@@ -8,6 +8,8 @@ require 'capybara/rspec'
 
 require 'rapid_rack'
 
+Dir['./spec/support/*.rb'].each { |f| require f }
+
 RSpec.configure do |config|
   config.before(:suite) do
     load Rails.root.join('db/schema.rb')
@@ -29,4 +31,5 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 
   config.include Rack::Test::Methods
+  config.include TemporaryTestClass
 end
