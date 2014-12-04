@@ -99,7 +99,7 @@ that is:
 * `secret` &mdash; Your extremely secure secret
 * `issuer` &mdash; The `iss` claim to expect. This is the identifier of the
   Rapid Connect server you're authenticating against
-* `audience` &mdash; The `aus` claim to expect. This is your own service's
+* `audience` &mdash; The `aud` claim to expect. This is your own service's
   identifier
 * `receiver` &mdash; **String** representing the fully qualified class name of
   your receiver class
