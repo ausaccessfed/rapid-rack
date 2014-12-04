@@ -26,7 +26,7 @@ module RapidRack
 
     context '#receive' do
       before do
-        allow(creator).to receive(:subject).with(anything)
+        allow(creator).to receive(:subject).with(anything, anything)
           .and_return(authenticated_subject)
       end
 
@@ -35,7 +35,7 @@ module RapidRack
       end
 
       it 'passes the attributes through to the subject method' do
-        expect(creator).to receive(:subject).with(attrs)
+        expect(creator).to receive(:subject).with(env, attrs)
           .and_return(authenticated_subject)
 
         run
@@ -52,14 +52,14 @@ module RapidRack
       context 'with an overridden `map_attributes` method' do
         let(:overrides) do
           Module.new do
-            def map_attributes(_)
+            def map_attributes(_, _)
               { 'remapped' => true }
             end
           end
         end
 
         it 'passes the mapped attributes through to the subject method' do
-          expect(creator).to receive(:subject).with('remapped' => true)
+          expect(creator).to receive(:subject).with(env, 'remapped' => true)
             .and_return(authenticated_subject)
 
           run

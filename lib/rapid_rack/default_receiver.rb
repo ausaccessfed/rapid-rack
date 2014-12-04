@@ -1,12 +1,12 @@
 module RapidRack
   module DefaultReceiver
     def receive(env, claims)
-      attrs = map_attributes(claims['https://aaf.edu.au/attributes'])
-      store_id(env, subject(attrs).id)
+      attrs = map_attributes(env, claims['https://aaf.edu.au/attributes'])
+      store_id(env, subject(env, attrs).id)
       finish(env)
     end
 
-    def map_attributes(attrs)
+    def map_attributes(_env, attrs)
       attrs
     end
 
