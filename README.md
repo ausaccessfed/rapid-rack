@@ -51,7 +51,7 @@ module MyApplication
     # Receives the contents of the 'https://aaf.edu.au/attributes' claim from
     # Rapid Connect, and returns a set of attributes appropriate for passing in
     # to the `subject` method.
-    def map_attributes(attrs)
+    def map_attributes(_env, attrs)
       {
         targeted_id: attrs['edupersontargetedid'],
         name: attrs['displayname'],
@@ -65,7 +65,7 @@ module MyApplication
     #
     # Must return the subject, and the subject must have an `id` method to work
     # with the DefaultReceiver mixin.
-    def subject(attrs)
+    def subject(_env, attrs)
       identifier = attrs.slice(:targeted_id)
       MyOwnUserClass.find_or_initialize_by(identifier).tap do |subject|
         subject.update_attributes!(attrs)
