@@ -1,5 +1,23 @@
 # RapidRack
 
+[![Gem Version][GV img]][Gem Version]
+[![Build Status][BS img]][Build Status]
+[![Dependency Status][DS img]][Dependency Status]
+[![Code Climate][CC img]][Code Climate]
+[![Coverage Status][CS img]][Coverage Status]
+
+[Gem Version]: https://rubygems.org/gems/rapid-rack
+[Build Status]: https://travis-ci.org/ausaccessfed/rapid-rack
+[Dependency Status]: https://gemnasium.com/ausaccessfed/rapid-rack
+[Code Climate]: https://codeclimate.com/github/ausaccessfed/rapid-rack
+[Coverage Status]: https://coveralls.io/r/ausaccessfed/rapid-rack
+
+[GV img]: https://img.shields.io/gem/v/rapid-rack.svg
+[BS img]: https://img.shields.io/travis/ausaccessfed/rapid-rack/develop.svg
+[DS img]: https://img.shields.io/gemnasium/ausaccessfed/rapid-rack.svg
+[CC img]: https://img.shields.io/codeclimate/github/ausaccessfed/rapid-rack.svg
+[CS img]: https://img.shields.io/coveralls/ausaccessfed/rapid-rack.svg
+
 [AAF Rapid Connect](https://rapid.aaf.edu.au) authentication plugin for
 Rack-based web applications. Contains Rails-specific extensions for consumption
 by Rails applications.
