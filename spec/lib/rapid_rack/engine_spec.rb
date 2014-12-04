@@ -29,7 +29,7 @@ module RapidRack
           include DefaultReceiver
           include RedisRegistry
 
-          def map_attributes(attrs)
+          def map_attributes(_env, attrs)
             {
               targeted_id: attrs['edupersontargetedid'],
               email: attrs['mail'],
@@ -37,7 +37,7 @@ module RapidRack
             }
           end
 
-          def subject(attrs)
+          def subject(_env, attrs)
             identifier = attrs.slice(:targeted_id)
             TestSubject.find_or_initialize_by(identifier).tap do |subject|
               subject.update_attributes!(attrs)

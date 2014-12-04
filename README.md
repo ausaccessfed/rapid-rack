@@ -1,5 +1,23 @@
 # RapidRack
 
+[![Gem Version][GV img]][Gem Version]
+[![Build Status][BS img]][Build Status]
+[![Dependency Status][DS img]][Dependency Status]
+[![Code Climate][CC img]][Code Climate]
+[![Coverage Status][CS img]][Coverage Status]
+
+[Gem Version]: https://rubygems.org/gems/rapid-rack
+[Build Status]: https://travis-ci.org/ausaccessfed/rapid-rack
+[Dependency Status]: https://gemnasium.com/ausaccessfed/rapid-rack
+[Code Climate]: https://codeclimate.com/github/ausaccessfed/rapid-rack
+[Coverage Status]: https://coveralls.io/r/ausaccessfed/rapid-rack
+
+[GV img]: https://img.shields.io/gem/v/rapid-rack.svg
+[BS img]: https://img.shields.io/travis/ausaccessfed/rapid-rack/develop.svg
+[DS img]: https://img.shields.io/gemnasium/ausaccessfed/rapid-rack.svg
+[CC img]: https://img.shields.io/codeclimate/github/ausaccessfed/rapid-rack.svg
+[CS img]: https://img.shields.io/coveralls/ausaccessfed/rapid-rack.svg
+
 [AAF Rapid Connect](https://rapid.aaf.edu.au) authentication plugin for
 Rack-based web applications. Contains Rails-specific extensions for consumption
 by Rails applications.
@@ -51,7 +69,7 @@ module MyApplication
     # Receives the contents of the 'https://aaf.edu.au/attributes' claim from
     # Rapid Connect, and returns a set of attributes appropriate for passing in
     # to the `subject` method.
-    def map_attributes(attrs)
+    def map_attributes(_env, attrs)
       {
         targeted_id: attrs['edupersontargetedid'],
         name: attrs['displayname'],
@@ -65,7 +83,7 @@ module MyApplication
     #
     # Must return the subject, and the subject must have an `id` method to work
     # with the DefaultReceiver mixin.
-    def subject(attrs)
+    def subject(_env, attrs)
       identifier = attrs.slice(:targeted_id)
       MyOwnUserClass.find_or_initialize_by(identifier).tap do |subject|
         subject.update_attributes!(attrs)
@@ -99,7 +117,7 @@ that is:
 * `secret` &mdash; Your extremely secure secret
 * `issuer` &mdash; The `iss` claim to expect. This is the identifier of the
   Rapid Connect server you're authenticating against
-* `audience` &mdash; The `aus` claim to expect. This is your own service's
+* `audience` &mdash; The `aud` claim to expect. This is your own service's
   identifier
 * `receiver` &mdash; **String** representing the fully qualified class name of
   your receiver class
