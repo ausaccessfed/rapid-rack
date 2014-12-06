@@ -88,5 +88,29 @@ module RapidRack
         expect(last_request.session[:subject_id]).to eq(TestSubject.last.id)
       end
     end
+
+    context '#authenticator' do
+      before do
+        expect_any_instance_of(RapidRack::Engine)
+          .to receive(:configuration).at_least(:once).and_return(configuration)
+      end
+
+      subject { RapidRack::Engine.authenticator }
+
+      context 'in development mode' do
+        let(:configuration) { { development_mode: true } }
+        it { is_expected.to eq('RapidRack::MockAuthenticator') }
+      end
+
+      context 'in test mode' do
+        let(:configuration) { { test_mode: true } }
+        it { is_expected.to eq('RapidRack::TestAuthenticator') }
+      end
+
+      context 'with no mode' do
+        let(:configuration) { {} }
+        it { is_expected.to eq('RapidRack::Authenticator') }
+      end
+    end
   end
 end

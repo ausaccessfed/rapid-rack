@@ -27,6 +27,7 @@ module RapidRack
 
     def authenticator
       return 'RapidRack::MockAuthenticator' if configuration[:development_mode]
+      return 'RapidRack::TestAuthenticator' if configuration[:test_mode]
       'RapidRack::Authenticator'
     end
   end
