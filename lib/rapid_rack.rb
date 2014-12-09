@@ -2,6 +2,7 @@ module RapidRack
 end
 
 require 'rapid_rack/version'
+require 'rapid_rack/with_claims'
 require 'rapid_rack/authenticator'
 require 'rapid_rack/test_authenticator'
 require 'rapid_rack/default_receiver'

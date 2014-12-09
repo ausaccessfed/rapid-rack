@@ -95,7 +95,9 @@ end
 
 ### Integrating with a Rack application
 
-Map the `RapidRack::Authenticator` app to a path in your application:
+Map the `RapidRack::Authenticator` app to a path in your application. The
+strongly suggested default of `/auth` will result in a callback URL ending in
+`/auth/jwt`, which is given to Rapid Connect during registration:
 
 ```ruby
 Rack::Builder.new do
@@ -152,7 +154,9 @@ module MyApplication
 end
 ```
 
-Mount the `RapidRack::Engine` engine in your Rails app. In `config/routes.rb`:
+Mount the `RapidRack::Engine` engine in your Rails app.  The strongly suggested
+default of `/auth` will result in a callback URL ending in `/auth/jwt`, which is
+given to Rapid Connect during registration. In `config/routes.rb`:
 
 ```ruby
 Rails.application.routes.draw do
