@@ -177,6 +177,60 @@ class WelcomeController < ApplicationController
 end
 ```
 
+### Using with Capybara-style tests
+
+Configure `rapid_rack` to run in test mode. In a Rails application this can be
+set in `config/environments/test.rb`:
+
+```ruby
+Rails.application.configure do
+  # ...
+
+  config.rapid_rack.test_mode = true
+end
+```
+
+Set the JWT in your test code. In this example factory\_girl has a `jwt` factory
+registered which creates a valid JWT.
+
+```ruby
+RSpec.feature 'First visit', type: :feature do
+  given(:user_attrs) { attributes_for(:user) }
+
+  background do
+    attrs = create(:aaf_attributes, displayname: user_attrs[:name],
+                                    mail: user_attrs[:email])
+    RapidRack::TestAuthenticator.jwt = create(:jwt, aaf_attributes: attrs)
+  end
+
+  # ...
+end
+```
+
+Once this is in place, your example will be presented with a plain page with a
+'Login' button when it is required to log in. The button will submit the form
+to the `/auth/jwt` endpoint, which works as normal and will invoke your
+receiver.
+
+```ruby
+RSpec.feature 'First visit', type: :feature do
+  # ... code from above ...
+
+  scenario 'initial login' do
+    visit '/'
+    click_button 'Sign in via AAF'
+
+    # At this point, your Capybara test is sitting in the TestAuthenticator page
+    # which has a 'Login' button and no other content.
+    expect(current_path).to eq('/auth/login')
+    click_button 'Login'
+
+    expect(current_path).to match(%r{/users/\d+})
+    expect(page).to have_content("Logged in as: #{user_attrs[:name]}")
+  end
+end
+```
+
 ## Contributing
 
 Refer to [GitHub Flow](https://guides.github.com/introduction/flow/) for
