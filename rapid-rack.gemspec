@@ -13,8 +13,8 @@ Gem::Specification.new do |spec|
   spec.license       = 'Apache-2.0'
 
   spec.files         = `git ls-files -z`.split("\x0")
-  spec.executables   = spec.files.grep(/^bin\//) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(/^(test|spec|features)\//)
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
   spec.add_dependency 'json-jwt'
@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'fakeredis'
   spec.add_development_dependency 'redis'
-  spec.add_development_dependency 'coveralls'
+  spec.add_development_dependency 'codeclimate-test-reporter'
 
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-rspec'
