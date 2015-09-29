@@ -13,7 +13,7 @@
 
 [GV img]: https://img.shields.io/gem/v/rapid-rack.svg
 [BS img]: https://img.shields.io/codeship/6fad8f80-0cd0-0133-0d1a-36a99efb0264/develop.svg
-[DS img]: https://img.shields.io/gemnasium/ausaccessfed/rapid-rack/develop.svg
+[DS img]: https://img.shields.io/gemnasium/ausaccessfed/rapid-rack.svg
 [CC img]: https://img.shields.io/codeclimate/github/ausaccessfed/rapid-rack.svg
 [CS img]: https://img.shields.io/codeclimate/coverage/github/ausaccessfed/rapid-rack.svg
 
