@@ -47,6 +47,15 @@ Add the `rapid-rack` dependency to your application's `Gemfile`:
 gem 'rapid-rack'
 ```
 
+If you will be using the recommended `RapidRack::RedisRegistry` module, you will
+require the `redis` gem to connect to your local [Redis][] data store:
+
+[Redis]: http://redis.io
+
+```
+gem 'redis'
+```
+
 Use Bundler to install the dependency:
 
 ```
