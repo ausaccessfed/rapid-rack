@@ -23,7 +23,7 @@ module RapidRack
     end
 
     def logout(env)
-      env['rack.session'].clear
+      env['rack.session'].destroy
       redirect_to('/')
     end
   end
