@@ -60,7 +60,7 @@ module RapidRack
         {
           aud: audience, iss: issuer, iat: Time.now, typ: 'authnresponse',
           nbf: 1.minute.ago, exp: 2.minutes.from_now,
-          jti: 'accept', :'https://aaf.edu.au/attributes' => attrs
+          jti: 'accept', 'https://aaf.edu.au/attributes' => attrs
         }
       end
 
